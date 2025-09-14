@@ -15,3 +15,13 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: true
+
+  management:
+    metrics:
+      export:
+        prometheus:
+          enabled: true
+          pushgateway:
+            enabled: true
+            base-url: http://prometheus-pushgateway.observability.svc.cluster.local:9091
+            job: ${spring.application.name}

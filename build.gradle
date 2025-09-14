@@ -32,6 +32,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 
 	// Observability dependencies
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+	implementation 'io.prometheus:simpleclient_pushgateway'
 	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
 
 	// Database dependencies
