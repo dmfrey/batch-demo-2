@@ -53,10 +53,9 @@ dependencies {
 
 }
 
-//bootBuildImage {
-//	imageName = "ghcr.io/dmfrey/${project.name}:${project.version}"
-//	publish = true
-//}
+bootBuildImage {
+	publish = true
+}
 
 tasks.named('test') {
 	useJUnitPlatform()
