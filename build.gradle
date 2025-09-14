@@ -33,7 +33,7 @@ dependencies {
 
 	// Observability dependencies
 	implementation 'io.micrometer:micrometer-registry-prometheus'
-	implementation 'io.prometheus:simpleclient_pushgateway'
+	implementation 'io.prometheus:prometheus-metrics-exporter-pushgateway'
 	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
 
 	// Database dependencies

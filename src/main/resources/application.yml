@@ -1,7 +1,8 @@
 logging:
   level:
     liquibase: debug
-    org.springframework.batch: info
+    org.springframework.batch: debug
+    org.springframework.jdbc: debug
     com.broadcom.springconsulting.batch: debug
 
 spring:
@@ -16,12 +17,12 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: true
 
-  management:
+management:
+  prometheus:
     metrics:
       export:
-        prometheus:
+        enabled: true
+        pushgateway:
           enabled: true
-          pushgateway:
-            enabled: true
-            base-url: http://prometheus-pushgateway.observability.svc.cluster.local:9091
-            job: ${spring.application.name}
+          address: http://prometheus-pushgateway.observability.svc.cluster.local:9091
+          job: ${spring.application.name}
