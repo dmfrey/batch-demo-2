@@ -44,8 +44,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build publish
       env:
-        GRADLE_USERNAME: ${{ github.actor }}
-        GRADLE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
     # the publishing section of your build.gradle

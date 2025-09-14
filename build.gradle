@@ -59,7 +59,7 @@ tasks.named('test') {
 
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
+		maven(MavenPublication) {
 			from components.java
 		}
 	}
@@ -67,10 +67,10 @@ publishing {
 	repositories {
 		maven {
 			name = "ghcr.io"
-			url = "https://ghcr.io/dmfrey/${project.name}:${project.version}"
+			url = "https://maven.pkg.github.com/dmfrey/${project.name}"
 			credentials {
-				username = System.getenv("GRADLE_USERNAME")
-				password = System.getenv("GRADLE_PASSWORD")
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GRADLE_TOKEN")
 			}
 		}
 	}
