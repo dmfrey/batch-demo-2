@@ -64,8 +64,8 @@ publishing {
 			name = "ghcr.io"
 			url = "https://ghcr.io/dmfrey/${project.name}:${project.version}"
 			credentials {
-				username = System.getenv("MAVEN_USERNAME")
-				password = System.getenv("MAVEN_PASSWORD")
+				username = System.getenv("GRADLE_USERNAME")
+				password = System.getenv("GRADLE_PASSWORD")
 			}
 		}
 	}
