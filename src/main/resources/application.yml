@@ -1,0 +1,17 @@
+logging:
+  level:
+    liquibase: debug
+    org.springframework.batch: info
+    com.broadcom.springconsulting.batch: debug
+
+spring:
+  application:
+    name: batch-demo
+
+  batch:
+    jdbc:
+      initialize-schema: never
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true

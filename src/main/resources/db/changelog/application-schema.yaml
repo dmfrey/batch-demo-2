@@ -1,0 +1,11 @@
+
+databaseChangeLog:
+  - changeSet:
+      id: 20250917-02
+      author: Daniel Frey
+      changes:
+        - sqlFile:
+            path: classpath:/db/changelog/schema-all.sql
+            stripComments: true
+            splitStatements: true
+            endDelimiter: ";"

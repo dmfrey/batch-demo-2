@@ -1,0 +1,11 @@
+
+databaseChangeLog:
+  - changeSet:
+      id: 20250917-01
+      author: Daniel Frey
+      changes:
+        - sqlFile:
+            path: classpath:/org/springframework/batch/core/schema-postgresql.sql
+            stripComments: true
+            splitStatements: true
+            endDelimiter: ";"

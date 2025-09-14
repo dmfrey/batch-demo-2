@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.broadcom.springconsulting'
+version = '0.0.1-SNAPSHOT'
+description = 'A Spring Batch Job to run on Kubernetes'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	// Spring Boot dependencies
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
+
+	// Observability dependencies
+	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+
+	// Database dependencies
+	implementation 'org.liquibase:liquibase-core'
+	runtimeOnly 'org.postgresql:postgresql'
+
+	// Developer Tools
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+	// Test dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.springframework.batch:spring-batch-test'
+
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:postgresql'
+
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
