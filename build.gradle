@@ -59,8 +59,11 @@ tasks.named('test') {
 
 publishing {
 	publications {
-		maven(MavenPublication) {
+		mavenJava(MavenPublication) {
 			from components.java
+
+			artifact bootJar
+
 		}
 	}
 
