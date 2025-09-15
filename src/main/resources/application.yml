@@ -17,6 +17,10 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: true
 
+  threads:
+    virtual:
+      enabled: true
+
 management:
   prometheus:
     metrics:

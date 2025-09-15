@@ -20,6 +20,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.core.task.VirtualThreadTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -37,6 +39,12 @@ public class BatchDemoApplication {
 				)
 		);
 
+	}
+
+	@Bean
+	public TaskExecutor batchTaskExecutor() {
+
+		return new VirtualThreadTaskExecutor("spring-batch-virtual-");
 	}
 
 	@Bean
@@ -71,13 +79,15 @@ public class BatchDemoApplication {
 	@Bean
 	Step step1(
 			JobRepository jobRepository, PlatformTransactionManager transactionManager,
-			ItemReader<Person> itemReader, ItemWriter<Person> itemWriter
+			ItemReader<Person> itemReader, ItemWriter<Person> itemWriter,
+			TaskExecutor batchTaskExecutor
 	) {
 
 		return new StepBuilder( "step1", jobRepository )
 				.<Person, Person> chunk( 3, transactionManager )
 				.reader( itemReader )
 				.writer( itemWriter )
+				.taskExecutor(batchTaskExecutor)
 				.build();
 	}
 
