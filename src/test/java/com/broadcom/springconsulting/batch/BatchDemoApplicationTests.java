@@ -10,6 +10,7 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.test.JobLauncherTestUtils;
@@ -20,6 +21,7 @@ import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.jdbc.JdbcTestUtils;
@@ -33,7 +35,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Import( TestcontainersConfiguration.class )
-@SpringBootTest
+@SpringBootTest(properties = "file.supplier.directory=classpath:/sample")
 @SpringBatchTest
 class BatchDemoApplicationTests {
 
@@ -81,25 +83,25 @@ class BatchDemoApplicationTests {
 	@Test
 	void testJob() throws Exception {
 
-		Files.write( this.inputFile, Stream.of( "Daniel,Frey", "Stephanie,Frey" ).toList() );
+		var testData = new ClassPathResource( "/sample/test-data.csv");
 
 		var jobParameters = new JobParametersBuilder()
-				.addString("fileName", "file://" + this.inputFile.toString() )
+				.addString("input.file.name", testData.getFile().getAbsolutePath() )
 				.toJobParameters();
 
 		var jobExecution = this.jobLauncherTestUtils.launchJob( jobParameters );
 
-		assertThat( jobExecution.getExitStatus() ).isEqualTo(ExitStatus.COMPLETED );
+		assertThat( jobExecution.getExitStatus() ).isEqualTo( ExitStatus.COMPLETED );
 
 	}
 
 	@Test
 	void testStep1() throws Exception {
 
-		Files.write( this.inputFile, Stream.of( "Daniel,Frey" ).toList() );
+		var testData = new ClassPathResource( "/sample/test-data.csv");
 
 		var jobParameters = new JobParametersBuilder()
-				.addString("fileName", "file://" + this.inputFile.toString() )
+				.addString("input.file.name", testData.getFile().getAbsolutePath() )
 				.toJobParameters();
 
 		var stepExecution = MetaDataInstanceFactory.createStepExecution( jobParameters );

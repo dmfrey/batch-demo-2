@@ -1,8 +1,8 @@
 logging:
   level:
-    liquibase: debug
-    org.springframework.batch: debug
-    org.springframework.jdbc: debug
+    liquibase: info
+    org.springframework.batch: info
+    org.springframework.jdbc: info
     com.broadcom.springconsulting.batch: debug
 
 spring:
@@ -10,22 +10,42 @@ spring:
     name: batch-demo
 
   batch:
+    job:
+      enabled: false
     jdbc:
       initialize-schema: never
+
+  cloud:
+    function:
+      definition: fileSupplier
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: true
 
+  sql:
+    init:
+      mode: never
+
   threads:
     virtual:
       enabled: true
+
+file:
+  consumer:
+    mode: ref
+  supplier:
+    directory: # Set some real dir with zips to process
+    filename-pattern: '*.csv'
+
+splitter:
+  charset: UTF-8
 
 management:
   prometheus:
     metrics:
       export:
-        enabled: true
+        enabled: false
         pushgateway:
           enabled: true
           address: prometheus-pushgateway.observability.svc.cluster.local:9091

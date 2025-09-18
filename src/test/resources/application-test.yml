@@ -1,0 +1,4 @@
+
+file:
+  supplier:
+    directory: classpath:/sample
